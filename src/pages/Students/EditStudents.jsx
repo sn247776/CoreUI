@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { UpdateStudent, getStudentInfo } from "../../redux/action/students";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,7 +103,7 @@ const EditStudents = () => {
 
   return (
     <Box>
-      {loading? <Loading/>:null}
+      {loading ? <Loading /> : null}
       <SecondaryHead heading="Edit Student" icon={<PersonIcon />} />
       <Box>
         <form onSubmit={submitHandler}>
@@ -192,46 +192,66 @@ const EditStudents = () => {
               color="primary"
               variant="filled"
             />
-            <TextField
-              margin="normal"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              required
-              fullWidth
-              label="Gender"
-              color="primary"
-              variant="filled"
-            />
-            <TextField
-              margin="normal"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              required
-              fullWidth
-              label="Category"
-              color="primary"
-              variant="filled"
-            />
-            <TextField
-              margin="normal"
-              required
-              value={religion}
-              onChange={(e) => setReligion(e.target.value)}
-              fullWidth
-              label="Religion"
-              color="primary"
-              variant="filled"
-            />
-            <TextField
-              margin="normal"
-              value={marital}
-              onChange={(e) => setMarital(e.target.value)}
-              required
-              fullWidth
-              label="Marital Status"
-              color="primary"
-              variant="filled"
-            />
+            <FormControl fullWidth color="primary" variant="filled">
+              <InputLabel>Select Gender</InputLabel>
+              <Select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Select Gender</em>
+                </MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth color="primary" variant="filled">
+              <InputLabel>Select Category</InputLabel>
+              <Select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Select Category</em>
+                </MenuItem>
+                <MenuItem value="General">General</MenuItem>
+                <MenuItem value="OBC">OBC</MenuItem>
+                <MenuItem value="SC">SC</MenuItem>
+                <MenuItem value="ST">ST</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth color="primary" variant="filled">
+              <InputLabel>Select Religion</InputLabel>
+              <Select
+                value={religion}
+                onChange={(e) => setReligion(e.target.value)}
+              >
+               <MenuItem value="">
+                  <em>Select Religion</em>
+                </MenuItem>
+                <MenuItem value="Christian">Christian</MenuItem>
+                <MenuItem value="Hinduism">Hinduism</MenuItem>
+                <MenuItem value="Islam">Islam</MenuItem>
+                <MenuItem value="Sikhism">Sikhism</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth color="primary" variant="filled">
+              <InputLabel>Select Marital Status</InputLabel>
+              <Select
+                value={marital}
+                onChange={(e) => setMarital(e.target.value)}
+              >
+                <MenuItem value="">
+                  <em>Select Marital Status</em>
+                </MenuItem>
+                <MenuItem value="Single">Single</MenuItem>
+                <MenuItem value="Married">Married</MenuItem>
+                <MenuItem value="Divorced">Divorced</MenuItem>
+                <MenuItem value="Widowed">Widowed</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               margin="normal"
               fullWidth
