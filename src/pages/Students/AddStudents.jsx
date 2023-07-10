@@ -168,7 +168,7 @@ const AddStudents = () => {
             color="primary"
             variant="filled"
           />
-          <FormControl fullWidth color="primary" variant="filled">
+          <FormControl fullWidth color="primary" variant="filled" required>
             <InputLabel>Select Gender</InputLabel>
             <Select
               value={gender}
@@ -182,7 +182,7 @@ const AddStudents = () => {
               <MenuItem value="Other">Other</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth color="primary" variant="filled">
+          <FormControl fullWidth color="primary" variant="filled" required>
             <InputLabel>Select Category</InputLabel>
             <Select
               value={category}
@@ -197,7 +197,7 @@ const AddStudents = () => {
               <MenuItem value="ST">ST</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth color="primary" variant="filled">
+          <FormControl fullWidth color="primary" variant="filled" required>
             <InputLabel>Select Religion</InputLabel>
             <Select
               value={religion}
@@ -213,7 +213,7 @@ const AddStudents = () => {
               <MenuItem value="Other">Other</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth color="primary" variant="filled">
+          <FormControl fullWidth color="primary" variant="filled" required>
             <InputLabel>Select Marital Status</InputLabel>
             <Select
               value={marital}

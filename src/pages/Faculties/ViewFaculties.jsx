@@ -56,7 +56,7 @@ const ViewFaculty = () => {
   return (
     <Box p={2}>
       <Box>
-        <p>Full Name: {faculty.full_name}</p>
+        <p>Full Name: {faculty.name}</p>
         <p>Serial: {faculty.serial}</p>
         <p>Email ID: {faculty.email_id}</p>
         <p>Pin Code: {faculty.pin_code}</p>

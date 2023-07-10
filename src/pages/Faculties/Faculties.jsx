@@ -26,7 +26,7 @@ const Faculties = () => {
     faculty.pin_code,
     faculty.dob,
     <Box>
-      <Link to={`/edit-facultie/${faculty.id}`}>
+      <Link to={`/facultie/edit/${faculty.id}`}>
         <IconButton>
           <EditIcon />
         </IconButton>

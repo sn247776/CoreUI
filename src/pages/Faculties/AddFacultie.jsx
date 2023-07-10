@@ -156,11 +156,12 @@ const AddFaculty = () => {
               color="primary"
               variant="filled"
             />
-            <FormControl fullWidth color="primary" variant="filled">
+            <FormControl fullWidth color="primary" variant="filled" required>
               <InputLabel>Select Gender</InputLabel>
               <Select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
+                
               >
                 <MenuItem value="">
                   <em>Select Gender</em>
@@ -170,7 +171,7 @@ const AddFaculty = () => {
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth color="primary" variant="filled">
+            <FormControl fullWidth color="primary" variant="filled" required>
               <InputLabel>Select Category</InputLabel>
               <Select
                 value={category}
@@ -185,7 +186,7 @@ const AddFaculty = () => {
                 <MenuItem value="ST">ST</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth color="primary" variant="filled">
+            <FormControl fullWidth color="primary" variant="filled" required>
               <InputLabel>Select Religion</InputLabel>
               <Select
                 value={religion}
@@ -203,7 +204,7 @@ const AddFaculty = () => {
                 <MenuItem value="Others">Others</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth color="primary" variant="filled">
+            <FormControl fullWidth color="primary" variant="filled" required>
               <InputLabel>Select Marital Status</InputLabel>
               <Select
                 value={maritalStatus}

@@ -20,7 +20,7 @@ const EditFaculty = ({ faculty }) => {
   
   
 
-  const [fullName, setFullName] = useState(facultyInfo?.full_name || "");
+  const [fullName, setFullName] = useState(facultyInfo?.name || "");
   const [dob, setDOB] = useState(facultyInfo?.dob || "");
   const [email, setEmail] = useState(facultyInfo?.email_id || "");
   const [contactNo, setContactNo] = useState(facultyInfo?.contact_no || "");
@@ -41,7 +41,7 @@ const EditFaculty = ({ faculty }) => {
 
     const jsonData = JSON.stringify({
       id: facultyInfo.id,
-      full_name: fullName,
+      name: fullName,
       dob: dob,
       email_id: email,
       contact_no: contactNo,
