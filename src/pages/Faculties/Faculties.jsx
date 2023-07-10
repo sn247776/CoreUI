@@ -20,7 +20,7 @@ const Faculties = () => {
   const columns = ['Full Name', 'Serial', 'Email ID', 'Pin Code', 'DOB', 'Actions'];
 
   const data = faculties?.map((faculty) => [
-    faculty.full_name,
+    faculty.name,
     faculty.serial,
     faculty.email_id,
     faculty.pin_code,

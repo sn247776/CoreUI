@@ -37,7 +37,7 @@ const AddFaculty = () => {
     e.preventDefault();
 
     const jsonData = JSON.stringify({
-      full_name: fullName,
+      name: fullName,
       dob: dob,
       email_id: email,
       contact_no: contactNo,
@@ -87,6 +87,9 @@ const AddFaculty = () => {
               required
               fullWidth
               type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
               value={dob}
               onChange={(e) => setDOB(e.target.value)}
               label="Date of Birth"
