@@ -1,130 +1,199 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { Autocomplete, Box, Button, Paper, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 import { addCourse } from "../../redux/action/courses";
-import { getAllDepartments } from "../../redux/action/departments";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 
 const AddCourse = () => {
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState(null);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllDepartments());
-  }, [dispatch]);
-
-  const handleDepartmentChange = (event, value) => {
-    if (value) {
-      setSelectedDepartmentId(value.id);
-    } else {
-      setSelectedDepartmentId(null);
-    }
-  };
-
   const { courseInfo, loading, error, message } = useSelector(
     (state) => state.courses
   );
-  const { departments } = useSelector((state) => state.departments);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [createdBy, setCreatedBy] = useState("");
+  const [category, setCategory] = useState("");
+  const [image, setImage] = useState("");
+  const [imagePrev, setImagePrev] = useState("");
+
+  const dispatch = useDispatch();
+
+  const categories = [
+    "Web development",
+    "Artificial Intellegence",
+    "Data Structure & Algorithm",
+    "App Development",
+    "Data Science",
+    "Game Development",
+  ];
+
+  const changeImageHandler = (e) => {
+    const file = e.target.files[0];
+    if (file instanceof Blob) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        setImagePrev(reader.result);
+        setImage(file);
+      };
+    } else {
+      console.error("Invalid file type.");
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.append("title", title);
+    myForm.append("description", description);
+    myForm.append("category", category);
+    myForm.append("createdBy", createdBy);
+    myForm.append("file", image);
+    dispatch(addCourse(myForm));
+  };
 
   useEffect(() => {
     if (error) {
-      console.log(error);
+      toast.error(error);
       dispatch({ type: "clearError" });
     }
 
     if (message) {
-      console.log(message);
       toast.success(message);
+      setTitle("");
+      setDescription("");
+      setCreatedBy("");
+      setCategory("");
+      setImage("");
+      setImagePrev("");
+      dispatch({ type: "clearMessage" });
     }
   }, [dispatch, error, message]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const jsonData = JSON.stringify({
-      name: name,
-      code: code,
-      type: type,
-      description: description,
-      department_id: selectedDepartmentId,
-    });
-    console.log(jsonData);
-    dispatch(addCourse(jsonData));
-  };
-
   return (
     <Box p={2}>
-      <Paper>
-        <form onSubmit={submitHandler}>
-          <Box>
-            <TextField
-              margin="normal"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              fullWidth
-              label="Course Name"
-              color="primary"
-              variant="filled"
-            />
+      <Box
+        m={5}
+        width={"100%"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+      >
+        <Box fontSize={"40px"} margin={"10px 0"}>
+          Create Course
+        </Box>
+        <Box>
+          <Box maxWidth={"500px"}>
+            <form onSubmit={submitHandler}>
+              <TextField
+                margin="normal"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                fullWidth
+                id="name"
+                label="Title"
+                name="title"
+                autoComplete="title"
+                autoFocus
+                color="primary"
+                variant="filled"
+              />
+              <TextField
+                value={createdBy}
+                onChange={(e) => setCreatedBy(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="creater"
+                label="Creator Name"
+                name="creator"
+                autoComplete="creator"
+                color="primary"
+                variant="filled"
+              />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              label="Course Code"
-              color="primary"
-              variant="filled"
-            />
+              <Box width={"100%"} my={1}>
+                <FormControl fullWidth color="primary" variant="filled">
+                  <InputLabel>Select a category</InputLabel>
+                  <Select
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>Select a category</em>
+                    </MenuItem>
+                    {categories.map((item) => (
+                      <MenuItem key={item} value={item}>
+                        {item}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
-            <Autocomplete
-              options={departments}
-              disabled = {loading}
-              getOptionLabel={(option) => option.name}
-              variant="filled"
-              renderInput={(params) => (
-                <TextField {...params} label="Department" variant="filled"  margin="normal" />
-              )}
-              onChange={handleDepartmentChange}
+              {imagePrev && (
+            <img
+              src={imagePrev}
+              alt="Image Preview"
+              style={{ maxHeight: "200px", marginTop: "10px" }}
             />
+          )}
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              label="Course Type"
-              color="primary"
-              variant="filled"
-            />
+              <input
+                type="file"
+                onChange={changeImageHandler}
+                style={{ margin: "5px 0" }}
+                accept="image/*"
+                required
+                className="upload-box"
+              />
 
-            <TextField
-              margin="normal"
-              fullWidth
-              multiline
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              label="Course Description"
-              color="primary"
-              variant="filled"
-            />
+              <TextField
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="description"
+                label="Description"
+                name="description"
+                autoComplete="description"
+                multiline
+                rows={3}
+                color="primary"
+                variant="filled"
+              />
 
-            <Button variant="outlined" color="primary" type="submit">
-              Save
-            </Button>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "16px",
+                  padding: "5px 0",
+                  margin: "10px 0",
+                  textTransform: "none",
+                }}
+              >
+                Create Course
+              </Button>
+            </form>
           </Box>
-        </form>
-      </Paper>
+        </Box>
+      </Box>
     </Box>
   );
 };

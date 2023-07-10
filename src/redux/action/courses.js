@@ -1,44 +1,69 @@
 import axios from "axios";
-import { server } from "../store";
+import { server, server2 } from "../store";
 
-export const getAllCourses = () => async (dispatch) => {
-  try {
-    dispatch({ type: "getAllCoursesRequest" });
-    const response = await axios.get(`${server}/courses`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const { data } = response;
+export const getAllCourses =
+  (category = '', keyword = '') =>
+  async dispatch => {
+    try {
+      dispatch({ type: 'getAllCoursesRequest' });
 
-    dispatch({ type: "getAllCoursesSuccess", payload: data });
-    console.log(data);
-  } catch (error) {
-    dispatch({
-      type: "getAllCoursesFail",
-      payload: error.response.data.message,
-    });
-  }
-};
+      const { data } = await axios.get(
+        `${server2}/courses?keyword=${keyword}&category=${category}`
+      );
 
-export const addCourse = (jsonData) => async (dispatch) => {
-  try {
-    dispatch({ type: "addCourseRequest" });
-    const { data } = await axios.post(`${server}/courses`, jsonData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    dispatch({ type: "addCourseSuccess", payload: data.message });
+      dispatch({ type: 'getAllCoursesSuccess', payload: data.courses });
+    } catch (error) {
+      dispatch({
+        type: 'getAllCoursesFail',
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+
+  export const addCourse = formData => async dispatch => {
+    try {
+      const config = {
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      };
+      dispatch({ type: 'addCourseRequest' });
+  
+      const { data } = await axios.post(
+        `${server2}/createcourse`,
+        formData,
+        config
+      );
+  
+      dispatch({ type: 'addCourseSuccess', payload: data.message });
+    } catch (error) {
+      dispatch({
+        type: 'addCourseFail',
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+// export const addCourse = (jsonData) => async (dispatch) => {
+//   try {
+//     dispatch({ type: "addCourseRequest" });
+//     const { data } = await axios.post(`${server}/courses`, jsonData, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     dispatch({ type: "addCourseSuccess", payload: data.message });
     
-  } catch (error) {
+//   } catch (error) {
     
-    dispatch({
-      type: "addCourseFail",
-      payload: error.response.data.message,
-    });
-  }
-};
+//     dispatch({
+//       type: "addCourseFail",
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
 
 export const getCourseInfo = (course_id) => async (dispatch) => {
   try {

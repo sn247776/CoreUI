@@ -19,28 +19,34 @@ const Courses = () => {
     dispatch(getAllCourses());
   }, [dispatch]);
 
-  const columns = ['Name', 'Code', 'Type', 'Actions'];
+  console.log(courses)
+
+  const columns = ['Poster','Title', 'Category', 'Creator'];
 
   const data = courses?.map((course) => [
-    course.name,
-    course.code,
-    course.type,
     <Box>
-      <Link to={`/courses/edit/${course.id}`}>
-      <Tooltip title="Edit">
-          <IconButton>
-            <EditIcon />
-          </IconButton>
-          </Tooltip>
-        </Link>
-        <Link to={`/courses/view/${course.id}`}>
-        <Tooltip title="View">
-          <IconButton>
-            <VisibilityIcon />
-          </IconButton>
-          </Tooltip>
-        </Link>
-    </Box>
+    <img src={course.poster.url} height={"50px"} />
+  </Box>,
+    course.title,
+    course.category,
+    course.createdBy,
+
+    // <Box>
+    //   <Link to={`/courses/edit/${course._id}`}>
+    //   <Tooltip title="Edit">
+    //       <IconButton>
+    //         <EditIcon />
+    //       </IconButton>
+    //       </Tooltip>
+    //     </Link>
+    //     <Link to={`/courses/view/${course._id}`}>
+    //     <Tooltip title="View">
+    //       <IconButton>
+    //         <VisibilityIcon />
+    //       </IconButton>
+    //       </Tooltip>
+    //     </Link>
+    // </Box>
   ]);
 
   const options = {
